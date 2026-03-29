@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Proms Studio
 
-## Getting Started
+Proms Studio is a premium SaaS web application for creating, organizing, refining, and managing AI prompts through a polished studio-style interface.
 
-First, run the development server:
+This project is being built as a modern, scalable product with a strong focus on:
+
+- premium UI quality
+- clean information architecture
+- maintainable frontend engineering
+- fast iteration
+- future-ready backend integration
+
+## Status
+
+This project is in active development.
+
+The current focus is:
+
+- building a strong frontend foundation
+- professionalizing the architecture
+- improving UI consistency and product polish
+- preparing the codebase for future data integration
+
+## Stack
+
+- Next.js (App Router)
+- TypeScript
+- Clerk for authentication
+- Vercel for deployment
+- Supabase planned for database features
+
+## Product goals
+
+Proms Studio is designed to become a focused workspace for prompt creation and management.
+
+Core product goals:
+
+- help users create and organize prompts efficiently
+- provide a premium and modern studio experience
+- keep the interface elegant, clear, and trustworthy
+- support long-term scalability as features grow
+
+## Development principles
+
+The codebase follows these principles:
+
+- modular architecture
+- reusable components
+- strong TypeScript discipline
+- premium, production-minded UI
+- maintainable feature evolution
+- consistency over improvisation
+
+## Project structure
+
+```text
+src/
+  app/
+  components/
+    ui/
+    features/
+  lib/
+  hooks/
+  types/
+public/
+```
+
+The structure will continue evolving as the product grows, but the goal is to keep clear separation between routing, UI primitives, feature components, and shared utilities.
+
+## Authentication
+
+Authentication is handled with Clerk.
+
+Any user/account flows should align with Clerk patterns already present in the codebase.
+
+## Data layer
+
+Supabase is planned as the future database solution, but database integration should only be implemented when the relevant client setup, environment variables, and schema decisions are ready.
+
+Until then, avoid assuming a fully connected backend exists.
+
+## Deployment
+
+The primary deployment target is Vercel.
+
+Implementation decisions should remain compatible with modern Vercel-hosted Next.js applications.
+
+## Getting started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000` in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
 
-## Learn More
+## Roadmap
 
-To learn more about Next.js, take a look at the following resources:
+Planned areas of work include:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- stronger design system foundations
+- refined studio layouts and navigation
+- prompt organization and management workflows
+- backend/data integration with Supabase
+- improved account-aware experiences with Clerk
+- better scalability and production readiness
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes for AI agents
 
-## Deploy on Vercel
+This repository includes an `AGENTS.md` file as the primary instruction source for coding agents.
+If you are an AI assistant working in this repository, follow `AGENTS.md` first.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Add the project license here when decided.
