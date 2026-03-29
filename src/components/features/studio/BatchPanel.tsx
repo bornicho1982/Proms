@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react';
-import type { ImageRole, ImageInput } from '@/lib/gemini/client';
-import type { TargetEngine } from '@/lib/prompts/generator';
+import type { ImageRole, ImageInput, TargetEngine } from '@/types';
+import { fileToBase64 } from '@/lib/utils/image';
+import { delay, fetchWithRetry } from '@/lib/utils/common';
 
 interface BatchItem {
   id: number;
@@ -54,35 +55,6 @@ export default function BatchPanel({ isEs, baseSlotFile, characterSlotFile, lang
     setBatchItems(prev => prev.filter(item => item.id !== id));
   };
 
-  const fileToBase64 = async (file: File): Promise<string> => {
-    const reader = new FileReader();
-    return new Promise<string>((resolve, reject) => {
-      reader.onload = () => resolve((reader.result as string).split(',')[1]);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-  const fetchWithRetry = async (url: string, options: RequestInit, maxRetries = 3): Promise<Response> => {
-    for (let attempt = 0; attempt < maxRetries; attempt++) {
-      const response = await fetch(url, options);
-      if (response.ok) return response;
-      
-      const data = await response.json().catch(() => ({}));
-      const isRateLimit = response.status === 429 || response.status === 503;
-      
-      if (isRateLimit && attempt < maxRetries - 1) {
-        const waitTime = (attempt + 1) * 5000; // 5s, 10s, 15s
-        await delay(waitTime);
-        continue;
-      }
-      throw new Error(data.error || `Analysis failed (${response.status})`);
-    }
-    throw new Error('Max retries exceeded');
-  };
-
   const handleRunBatch = async () => {
     if (!baseSlotFile || batchItems.length === 0) return;
     setIsRunning(true);
@@ -118,7 +90,7 @@ export default function BatchPanel({ isEs, baseSlotFile, characterSlotFile, lang
 
         const data = await response.json();
         const { generateEnginePrompt, DEFAULT_OPTIONS } = await import('@/lib/prompts/generator');
-        const prompt = generateEnginePrompt(data.analysis, language as 'es' | 'en', { ...DEFAULT_OPTIONS, engine: targetEngine });
+        const prompt = generateEnginePrompt(data.analysis, { ...DEFAULT_OPTIONS, engine: targetEngine });
         
         results.push(prompt);
         setBatchItems(prev => prev.map(b => b.id === item.id ? { ...b, isProcessing: false, generatedPrompt: prompt } : b));

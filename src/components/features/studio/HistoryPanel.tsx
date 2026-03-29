@@ -4,7 +4,11 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db, deleteHistoryItem, clearHistory } from '@/lib/db/history';
 import { useState } from 'react';
 
-export default function HistoryPanel() {
+interface HistoryPanelProps {
+  isEs: boolean;
+}
+
+export default function HistoryPanel({ isEs }: HistoryPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
   const items = useLiveQuery(() => db.history.orderBy('date').reverse().toArray());
 
@@ -36,7 +40,7 @@ export default function HistoryPanel() {
           gap: '8px'
         }}
       >
-        <span>🖼️ Historial</span>
+        <span>🖼️ {isEs ? 'Historial' : 'History'}</span>
         <span style={{ 
           background: 'rgba(255,255,255,0.2)', 
           padding: '2px 8px', 
@@ -55,10 +59,10 @@ export default function HistoryPanel() {
           right: 0,
           width: '400px',
           height: '100vh',
-          background: 'var(--color-surface)',
-          borderLeft: '1px solid var(--color-border)',
+          background: '#050505',
+          borderLeft: '1px solid rgba(255,255,255,0.1)',
           boxShadow: '-4px 0 24px rgba(0,0,0,0.5)',
-          zIndex: 99,
+          zIndex: 1000,
           padding: '20px',
           overflowY: 'auto',
           display: 'flex',
@@ -66,10 +70,12 @@ export default function HistoryPanel() {
           gap: '20px'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h2 style={{ fontSize: '1.2rem', margin: 0 }}>Historial de Generaciones</h2>
+            <h2 style={{ fontSize: '1rem', fontWeight: 700, margin: 0 }}>
+              {isEs ? 'HISTORIAL DE GENERACIONES' : 'GENERATION HISTORY'}
+            </h2>
             <button 
               onClick={() => setIsOpen(false)}
-              style={{ background: 'none', border: 'none', color: 'var(--color-text)', cursor: 'pointer', fontSize: '1.5rem' }}
+              style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1.5rem' }}
             >
               ×
             </button>
@@ -78,7 +84,7 @@ export default function HistoryPanel() {
           {items && items.length > 0 && (
             <button 
               onClick={() => {
-                if (window.confirm('¿Borrar todo el historial?')) clearHistory();
+                if (window.confirm(isEs ? '¿Borrar todo el historial?' : 'Clear all history?')) clearHistory();
               }}
               style={{
                 background: 'rgba(239, 68, 68, 0.1)',
@@ -86,17 +92,21 @@ export default function HistoryPanel() {
                 border: '1px solid rgba(239, 68, 68, 0.2)',
                 padding: '8px',
                 borderRadius: '8px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                fontSize: '0.75rem',
+                fontWeight: 600
               }}
             >
-              🗑️ Limpiar Historial
+              🗑️ {isEs ? 'Limpiar Historial' : 'Clear History'}
             </button>
           )}
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {!items || items.length === 0 ? (
-              <p style={{ color: 'var(--color-primary-light)', textAlign: 'center', marginTop: '40px' }}>
-                Tu historial está vacío. ¡Analiza imágenes para empezar a llenarlo!
+              <p style={{ color: '#666', textAlign: 'center', marginTop: '40px', fontSize: '0.85rem' }}>
+                {isEs 
+                  ? 'Tu historial está vacío. ¡Analiza imágenes para empezar a llenarlo!' 
+                  : 'Your history is empty. Analyze images to start filling it!'}
               </p>
             ) : (
               items.map((item) => (
@@ -140,7 +150,7 @@ export default function HistoryPanel() {
                     )}
                     <button 
                       onClick={() => {
-                        if (window.confirm('¿Borrar este item?')) deleteHistoryItem(item.id!);
+                        if (window.confirm(isEs ? '¿Borrar este item?' : 'Delete this item?')) deleteHistoryItem(item.id!);
                       }}
                       style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: 'white', padding: '6px 10px', borderRadius: '6px', cursor: 'pointer' }}
                     >🗑️</button>

@@ -93,7 +93,9 @@ body {
   background: var(--text-tertiary);
 }
 
-/* Layout - SaaS Shell */
+/* ==========================================================================
+   LAYOUT - SAAS SHELL
+   ========================================================================== */
 .saas-layout {
   display: flex;
   min-height: 100vh;
@@ -1765,7 +1767,9 @@ body {
   line-height: 1.5;
 }
 
-/* Workbench Controls */
+/* ==========================================================================
+   WORKBENCH CONTROLS
+   ========================================================================== */
 .workbench-panel {
   background: rgba(255,255,255,0.01);
   border: 1px solid rgba(255,255,255,0.05);

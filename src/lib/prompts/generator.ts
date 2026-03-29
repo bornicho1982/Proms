@@ -47,7 +47,6 @@ const getStyleSuffix = (stylePreset: string) => {
  */
 export function generateEnginePrompt(
   analysis: ImageAnalysis,
-  language: Language = 'en',
   options: PromptOptions = DEFAULT_OPTIONS
 ): string {
   const isMJ = options.engine === 'midjourney';

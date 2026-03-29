@@ -8,14 +8,18 @@ function getClient() {
 export type Language = 'es' | 'en';
 export type ImageRole = 'base' | 'character' | 'pose' | 'setting' | 'atmosphere';
 
+export interface AnalysisCategory {
+  [key: string]: string | string[] | undefined;
+}
+
 export interface ImageInput {
   role: ImageRole;
   base64: string;
   mimeType: string;
 }
 
-export interface ImageAnalysis {
-  character?: {
+export interface ImageAnalysis extends Record<string, AnalysisCategory | string | undefined> {
+  character?: AnalysisCategory & {
     ageAndGender: string;
     ethnicity: string;
     bodyType: string;
@@ -29,21 +33,21 @@ export interface ImageAnalysis {
     clothing: string;
     distinctiveTraits: string;
   };
-  pose?: {
+  pose?: AnalysisCategory & {
     bodyLanguage: string;
     action: string;
     cameraAngle: string;
     framing: string;
     interaction: string;
   };
-  settingOverride?: {
+  settingOverride?: AnalysisCategory & {
     location: string;
     environment: string;
     timeOfDay: string;
     weather: string;
     backgroundElements: string;
   };
-  composition: {
+  composition: AnalysisCategory & {
     mainSubject: string;
     secondaryElements: string;
     setting: string;
@@ -55,7 +59,7 @@ export interface ImageAnalysis {
     aspectRatio: string;
     negativeSpace: string;
   };
-  lighting: {
+  lighting: AnalysisCategory & {
     type: string;
     direction: string;
     quality: string;
@@ -66,7 +70,7 @@ export interface ImageAnalysis {
     shadows: string;
     reflections: string;
   };
-  colorPalette: {
+  colorPalette: AnalysisCategory & {
     dominantColors: string[];
     colorScheme: string;
     saturation: string;
@@ -75,7 +79,7 @@ export interface ImageAnalysis {
     colorAccents: string;
     emotionalConnection: string;
   };
-  artisticStyle: {
+  artisticStyle: AnalysisCategory & {
     medium: string;
     artMovement: string;
     visualAesthetic: string;
@@ -85,7 +89,7 @@ export interface ImageAnalysis {
     detailLevel: string;
     rendering: string;
   };
-  mood: {
+  mood: AnalysisCategory & {
     primaryEmotion: string;
     energy: string;
     narrativeTone: string;
@@ -93,7 +97,7 @@ export interface ImageAnalysis {
     temporalFeeling: string;
     subjectExpression: string;
   };
-  textures: {
+  textures: AnalysisCategory & {
     identifiedMaterials: string;
     surfaceProperties: string;
     materialState: string;
@@ -101,7 +105,7 @@ export interface ImageAnalysis {
     microDetails: string;
     reflectivity: string;
   };
-  technical: {
+  technical: AnalysisCategory & {
     apparentResolution: string;
     simulatedLens: string;
     estimatedAperture: string;
@@ -109,7 +113,7 @@ export interface ImageAnalysis {
     postProcessing: string;
     motionBlur: string;
   };
-  narrative: {
+  narrative: AnalysisCategory & {
     impliedStory: string;
     symbolism: string;
     culturalContext: string;

@@ -1,0 +1,28 @@
+
+> proms-app@0.1.0 lint
+> eslint
+
+
+E:\Proms\src\components\features\studio\DigitalMicroscope.tsx
+   3:10  warning  'ImageAnalysis' is defined but never used  @typescript-eslint/no-unused-vars
+   3:41  warning  'Language' is defined but never used       @typescript-eslint/no-unused-vars
+  45:46  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  67:44  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+E:\Proms\src\components\features\studio\DirectorControl.tsx
+   3:10  warning  'Language' is defined but never used      @typescript-eslint/no-unused-vars
+  12:36  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Proms\src\components\features\studio\ReferenceDock.tsx
+  34:51  warning  'titleEs' is defined but never used  @typescript-eslint/no-unused-vars
+  34:60  warning  'descEn' is defined but never used   @typescript-eslint/no-unused-vars
+  34:68  warning  'descEs' is defined but never used   @typescript-eslint/no-unused-vars
+
+E:\Proms\src\lib\prompts\generator.ts
+  50:3  warning  'language' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+E:\Proms\src\lib\proxy.ts
+  3:7  warning  'isPublicRoute' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 11 problems (3 errors, 8 warnings)
+

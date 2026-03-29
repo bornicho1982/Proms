@@ -1,9 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, saveCharacter, deleteCharacter, type SavedCharacter } from '@/lib/db/history';
-import type { ImageAnalysis } from '@/lib/gemini/client';
-import { useState } from 'react';
+import type { ImageAnalysis } from '@/types';
 
 interface CharacterManagerProps {
   currentCharacterData?: ImageAnalysis['character'];
