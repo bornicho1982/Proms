@@ -39,23 +39,38 @@ export default function StudioPage() {
       {/* Column 1: Workspace ID & Navigation */}
       <aside className="studio-sidebar-nav">
          <div className="workspace-brand">
-           Proms <span className="brand-badge">STUDIO</span>
+           Proms<span className="accent-dot">.</span>
          </div>
          
-         <div className="workspace-section">
-            <h3 className="section-label">{isEs ? 'SESIÓN ACTIVA' : 'ACTIVE SESSION'}</h3>
-            <div className="char-badge">
-               <div className="status-indicator online" />
-               {loadedCharName || (isEs ? 'Nuevo ADN' : 'New DNA')}
+         <div className="workspace-nav-group">
+            <h3 className="section-label">{isEs ? 'NAVEGACIÓN' : 'NAVIGATION'}</h3>
+            <nav className="workspace-menu">
+               <div className="menu-item active">
+                 <span className="menu-icon">⚡</span>
+                 {isEs ? 'Estudio' : 'Studio'}
+               </div>
+               <div className="menu-item">
+                 <span className="menu-icon"> galerÍa </span>
+                 {isEs ? 'Resultados' : 'Gallery'}
+               </div>
+            </nav>
+         </div>
+
+         <div className="sidebar-spacer" />
+
+         <div className="workspace-section user-profile">
+            <h3 className="section-label">{isEs ? 'DIRECTOR DE ARTE' : 'ART DIRECTOR'}</h3>
+            <div className="user-badge-premium">
+               <div className="user-avatar-placeholder" />
+               <div className="user-info">
+                 <span className="user-name">Director_01</span>
+                 <span className="plan-tag">PLAN FREE</span>
+               </div>
             </div>
          </div>
 
-         <nav className="workspace-menu">
-            {/* Logic for switching views if needed later */}
-         </nav>
-
          <div className="sidebar-footer">
-            <button className="lang-pill" onClick={() => setLanguage(isEs ? 'en' : 'es')}>
+            <button className="lang-pill-minimal" onClick={() => setLanguage(isEs ? 'en' : 'es')}>
                {language.toUpperCase()}
             </button>
          </div>
@@ -64,11 +79,10 @@ export default function StudioPage() {
       {/* Column 2: Main Creative Canvas (The Manifest) */}
       <main className="studio-canvas">
          <div className="canvas-header">
-            <h2 className="canvas-title">
-               {isEs ? 'Manifiesto Visual' : 'Visual Manifest'}
-            </h2>
-            <div className="canvas-actions">
-               {/* Global canvas actions */}
+            <div className="canvas-breadcrumbs">
+               <span className="crumb">PROMS</span>
+               <span className="sep">/</span>
+               <span className="crumb active">{loadedCharName || (isEs ? 'NUEVO ADN' : 'NEW DNA')}</span>
             </div>
          </div>
 

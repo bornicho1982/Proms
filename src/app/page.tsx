@@ -16,7 +16,7 @@ export default function LandingPage() {
       <div className="hero-glow-orb" />
       
       {/* Layout: Navbar */}
-      <Navbar isEs={isEs} />
+      <Navbar isEs={isEs} language={language} setLanguage={setLanguage} />
 
       {/* Hero Section */}
       <HeroSection isEs={isEs} />
@@ -29,12 +29,6 @@ export default function LandingPage() {
         <GallerySection isEs={isEs} />
         <FeatureGrid isEs={isEs} />
       </main>
-
-      {/* Language Switcher (Floating or bottom) */}
-      <div className="landing-lang-toggle">
-        <button className={isEs ? 'active' : ''} onClick={() => setLanguage('es')}>ES</button>
-        <button className={!isEs ? 'active' : ''} onClick={() => setLanguage('en')}>EN</button>
-      </div>
 
       {/* Layout: Footer */}
       <Footer isEs={isEs} />

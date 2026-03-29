@@ -30,13 +30,18 @@ export default function PromptDisplay({
   if (!result) return (
     <div className="manifest-empty-state">
        <div className="empty-state-orb" />
-       <IconScanFace size={32} className="empty-icon" />
-       <p className="empty-text">
-         {isEs ? 'SIN ALGORITMOS ACTIVOS' : 'NO ACTIVE ALGORITHMS'}
-       </p>
-       <span className="empty-subtext">
-         {isEs ? 'Sube referencias para generar el ADN visual.' : 'Upload references to generate visual DNA.'}
-       </span>
+       <div className="empty-state-content animate-in">
+         <IconScanFace size={48} className="empty-icon" />
+         <p className="empty-text">
+           {isEs ? 'SESIÓN SIN ANALIZAR' : 'NO ACTIVE ALGORITHMS'}
+         </p>
+         <span className="empty-subtext">
+           {isEs ? 'Sube o arrastra referencias para generar el Manifiesto Visual.' : 'Upload or drag references to generate the Visual Manifest.'}
+         </span>
+         <div className="empty-state-actions">
+            <div className="drop-zone-outline" />
+         </div>
+       </div>
     </div>
   );
 
@@ -47,7 +52,7 @@ export default function PromptDisplay({
     <div className="manifest-display animate-in">
       <div className="manifest-header">
         <div className="manifest-title-group">
-          <Badge variant="accent">LIVE GENERATION</Badge>
+          <Badge variant="accent">GENERACIÓN ACTIVA</Badge>
           <div className="manifest-meta">
              {options.engine} <span className="meta-sep">/</span> {options.aspectRatio}
           </div>
@@ -72,9 +77,10 @@ export default function PromptDisplay({
              <Button 
                variant="ghost" 
                size="sm" 
+               className="btn-copy-manifest"
                onClick={() => handleCopy(enginePromptText, 'engine')}
              >
-               {copiedKey === 'engine' ? 'COPIED' : 'COPY'}
+               {copiedKey === 'engine' ? 'COPIADO' : 'COPIAR'}
              </Button>
           </div>
           <p className="manifest-text main-prompt">
@@ -90,9 +96,10 @@ export default function PromptDisplay({
              <Button 
                variant="ghost" 
                size="sm" 
+               className="btn-copy-manifest"
                onClick={() => handleCopy(detailedPromptText, 'detailed')}
              >
-               {copiedKey === 'detailed' ? 'COPIED' : 'COPY'}
+               {copiedKey === 'detailed' ? 'COPIADO' : 'COPIAR'}
              </Button>
           </div>
           <p className="manifest-text sub-prompt">

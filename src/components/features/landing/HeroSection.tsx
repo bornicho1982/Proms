@@ -11,12 +11,12 @@ export const HeroSection = ({ isEs = true }: { isEs?: boolean }) => {
     <header className="hero-section">
       <div className="badge-modern">
         <IconWand size={16} /> 
-        {isEs ? 'Motor de Mapeo Visual Activo' : 'Visual Mapping Engine Active'}
+        {isEs ? 'Mapeo Espectral Activo' : 'Spectral Mapping Active'}
       </div>
       
       <h1 className="hero-title-modern">
         {isEs ? (
-          <>Escribe Menos.<br/><span className="text-gradient-modern">Genera como un Profesional.</span></>
+          <>Escribe Menos.<br/><span className="text-gradient-modern">Genera como un Pro.</span></>
         ) : (
           <>Prompt Less.<br/><span className="text-gradient-modern">Generate like a Pro.</span></>
         )}
@@ -24,56 +24,58 @@ export const HeroSection = ({ isEs = true }: { isEs?: boolean }) => {
       
       <p className="hero-subtitle-modern">
         {isEs 
-          ? 'Proms extrae fotográficamente la información de tus imágenes de referencia y programa el ADN visual perfecto en milisegundos.'
-          : 'Proms photographically extracts data from your references and programs the perfect visual DNA in milliseconds.'}
+          ? 'La arquitectura definitiva para extraer ADN visual de múltiples planos cinematográficos y convertirlos en prompts optimizados.'
+          : 'The definitive architecture to extract visual DNA from cinematic frames and convert them into optimized prompts.'}
       </p>
-      
-      <Card className="prompt-card glass-card">
-         <div className="prompt-header">
-           <Badge variant="primary">ENGINE OPTIMIZED</Badge>
-           <Button variant="ghost" className="copy-btn">
-             COPY PROMPT
-           </Button>
-         </div>
-         <div className="prompt-text">
-           {/* Prompt content here */}
-         </div>
-      </Card>
 
-      <Card className="prompt-card glass-card" style={{ marginTop: '16px', border: '1px solid rgba(139, 92, 246, 0.15)' }}>
-         <div className="prompt-header">
-           <Badge variant="accent" style={{ background: 'rgba(139, 92, 246, 0.2)', color: '#a78bfa' }}>DETAILED SPECTRAL</Badge>
-           <Button variant="ghost" className="copy-btn">
-             COPY PROMPT
-           </Button>
-         </div>
-         <div className="prompt-text" style={{ color: '#a78bfa', fontSize: '0.85rem' }}>
-           {/* Detailed prompt content here */}
-         </div>
-      </Card>
+      {/* Premium Prompt Showcase */}
+      <div className="hero-manifest-showcase">
+        <Card variant="glass" className="manifest-mockup card-main">
+           <div className="mockup-header">
+             <Badge variant="accent">VISUAL DNA v1.0</Badge>
+             <span className="mockup-engine">FLUX.1 [dev]</span>
+           </div>
+           <p className="mockup-text">
+             {isEs 
+               ? 'Cinematic close-up, cyberpunk lighting, extreme detail, 8k, raw texture, anamorphic flare...'
+               : 'Cinematic close-up, cyberpunk lighting, extreme detail, 8k, raw texture, anamorphic flare...'}
+           </p>
+        </Card>
+        
+        <Card variant="glass" className="manifest-mockup card-sub">
+           <div className="mockup-header">
+             <Badge variant="primary">ENGINE OPTIMIZED</Badge>
+           </div>
+           <p className="mockup-text small">
+             hyper-realistic skin texture, micro-pores, volumetric dust particles, shallow depth of field...
+           </p>
+        </Card>
+      </div>
 
-      <div className="hero-cta">
+      <div className="hero-cta-group">
         <Show when="signed-out">
           <SignInButton mode="modal">
-            <Button variant="primary" className="btn-primary-modern">
+            <Button variant="primary" size="lg" className="btn-hero-main">
                {isEs ? 'Comenzar Gratis' : 'Start for Free'}
-               <IconArrowRight size={16} style={{ marginLeft: '8px' }} />
+               <IconArrowRight size={18} style={{ marginLeft: '12px' }} />
             </Button>
           </SignInButton>
         </Show>
- 
+  
         <Show when="signed-in">
           <Link href="/studio">
-            <Button variant="primary" className="btn-primary-modern">
+            <Button variant="primary" size="lg" className="btn-hero-main">
                {isEs ? 'Lanzar Workspace' : 'Launch Workspace'}
-               <IconArrowRight size={16} style={{ marginLeft: '8px' }} />
+               <IconArrowRight size={18} style={{ marginLeft: '12px' }} />
             </Button>
           </Link>
         </Show>
         
-        <a href="#demo" className="btn-secondary-modern">
-          {isEs ? 'Ver Arquitectura' : 'View Architecture'}
-        </a>
+        <Link href="#features">
+          <Button variant="ghost" size="lg" className="btn-hero-secondary">
+            {isEs ? 'Ver Arquitectura' : 'View Architecture'}
+          </Button>
+        </Link>
       </div>
     </header>
   );

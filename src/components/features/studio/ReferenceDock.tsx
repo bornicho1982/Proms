@@ -37,11 +37,11 @@ export default function ReferenceDock({
   return (
     <div className="reference-dock">
       <div className="dock-header">
-        <h3 className="section-label">REFERENCE MODULES</h3>
+        <h3 className="section-label">MÓDULOS DE REFERENCIA</h3>
       </div>
       
       <div className="dock-grid">
-        {ROLES_CONFIG.map(({ role, titleEn, required }) => {
+        {ROLES_CONFIG.map(({ role, titleEs, required }) => {
           const slot = slots[role];
           const isActive = !!slot;
           
@@ -52,15 +52,19 @@ export default function ReferenceDock({
               className={`reference-module ${isActive ? 'active' : ''} ${draggingRole === role ? 'is-dragging' : ''}`}
               onDragOver={(e: React.DragEvent) => { e.preventDefault(); setDraggingRole(role); }}
               onDragLeave={() => setDraggingRole(null)}
-              onDrop={(e: React.DragEvent) => handleDrop(e, role)}
+              onDrop={(e: React.DragEvent) => {
+                e.preventDefault();
+                handleDrop(e, role);
+                setDraggingRole(null);
+              }}
               onClick={() => !isActive && fileInputRefs[role].current?.click()}
             >
               <div className="module-header">
                 <div className="module-title-group">
                   <span className="module-icon">{getRoleIcon(role)}</span>
-                  <span className="module-title">{titleEn.toUpperCase()}</span>
+                  <span className="module-title">{titleEs.toUpperCase()}</span>
                 </div>
-                {required && <div className="required-indicator" />}
+                {required && <div className="required-indicator" title="Obligatorio" />}
               </div>
 
               {isActive ? (
@@ -69,19 +73,20 @@ export default function ReferenceDock({
                   <img src={slot.preview} alt={role} className="preview-img" />
                   <div className="preview-overlay">
                     <Button 
-                      variant="secondary" 
+                      variant="ghost" 
                       size="sm" 
+                      className="btn-remove-slot"
                       onClick={(e) => { e.stopPropagation(); removeSlot(e, role); }}
                     >
-                      {/* Close Icon or text */}
-                      ×
+                      ELIMINAR
                     </Button>
                   </div>
                 </div>
               ) : (
                 <div className="module-placeholder">
                    <div className="plus-icon">+</div>
-                   <div className="placeholder-text">APPEND {role.toUpperCase()}</div>
+                   <div className="placeholder-text">AÑADIR {role.toUpperCase()}</div>
+                   <div className="drop-hint">Drop zone</div>
                 </div>
               )}
 
