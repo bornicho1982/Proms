@@ -4,7 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import "./globals.css";
 
 // Remove this import if you don't use it, but keeping it for PWA
-import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
+import ServiceWorkerRegistration from "@/components/pwa/ServiceWorkerRegistration";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
