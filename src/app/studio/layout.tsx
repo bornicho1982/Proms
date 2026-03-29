@@ -1,6 +1,6 @@
 'use client';
 
-import { UserButton, SignedIn } from '@clerk/nextjs';
+import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { usePathname } from 'next/navigation';
@@ -43,9 +43,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
 
         <div className="sidebar-profile">
           <div className="profile-top">
-            <SignedIn>
-              <UserButton appearance={{ elements: { userButtonAvatarBox: { width: '32px', height: '32px' } } }} />
-            </SignedIn>
+            <UserButton appearance={{ elements: { userButtonAvatarBox: { width: '32px', height: '32px' } } }} />
             <div className="profile-info">
               <p className="profile-name">Director_01</p>
               <span className="plan-badge">FREE PLAN</span>
