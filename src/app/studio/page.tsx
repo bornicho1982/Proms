@@ -7,10 +7,10 @@ import PromptDisplay from '@/components/features/studio/PromptDisplay';
 import HistoryPanel from '@/components/features/studio/HistoryPanel';
 import DigitalMicroscope from '@/components/features/studio/DigitalMicroscope';
 import { ImageRole } from '@/types';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function StudioPage() {
   const {
-    language, setLanguage,
     slots,
     isAnalyzing,
     result,
@@ -29,65 +29,37 @@ export default function StudioPage() {
     handleCopy
   } = useStudio();
 
-  const isEs = language === 'es';
+  const { language, isEs } = useLanguage();
 
   return (
-    <div className="studio-workspace">
-      {/* Background Ambience */}
-      <div className="studio-bg-fx" />
-      
-      {/* Column 1: Workspace ID & Navigation */}
-      <aside className="studio-sidebar-nav">
-         <div className="workspace-brand">
-           Proms<span className="accent-dot">.</span>
-         </div>
-         
-         <div className="workspace-nav-group">
-            <h3 className="section-label">{isEs ? 'NAVEGACIÓN' : 'NAVIGATION'}</h3>
-            <nav className="workspace-menu">
-               <div className="menu-item active">
-                 <span className="menu-icon">⚡</span>
-                 {isEs ? 'Estudio' : 'Studio'}
-               </div>
-               <div className="menu-item">
-                 <span className="menu-icon"> galerÍa </span>
-                 {isEs ? 'Resultados' : 'Gallery'}
-               </div>
-            </nav>
-         </div>
-
-         <div className="sidebar-spacer" />
-
-         <div className="workspace-section user-profile">
-            <h3 className="section-label">{isEs ? 'DIRECTOR DE ARTE' : 'ART DIRECTOR'}</h3>
-            <div className="user-badge-premium">
-               <div className="user-avatar-placeholder" />
-               <div className="user-info">
-                 <span className="user-name">Director_01</span>
-                 <span className="plan-tag">PLAN FREE</span>
-               </div>
-            </div>
-         </div>
-
-         <div className="sidebar-footer">
-            <button className="lang-pill-minimal" onClick={() => setLanguage(isEs ? 'en' : 'es')}>
-               {language.toUpperCase()}
-            </button>
-         </div>
-      </aside>
-
+    <div className="studio-workspace-container">
       {/* Column 2: Main Creative Canvas (The Manifest) */}
       <main className="studio-canvas">
          <div className="canvas-header">
             <div className="canvas-breadcrumbs">
-               <span className="crumb">PROMS</span>
+               <span className="crumb">PROMS.</span>
                <span className="sep">/</span>
                <span className="crumb active">{loadedCharName || (isEs ? 'NUEVO ADN' : 'NEW DNA')}</span>
+               <div className="status-dot-active" />
             </div>
          </div>
 
          <div className="canvas-content">
-            {/* Reference Modules moved to the main focus area but in a refined dock */}
+            {/* Empty state or content */}
+            {!slots.base && !result ? (
+              <div className="empty-workspace-state">
+                <div className="empty-icon-glow">✦</div>
+                <h2 className="empty-title">
+                  {isEs ? 'Listo para la Ingesta' : 'Ready for Ingestion'}
+                </h2>
+                <p className="empty-desc">
+                  {isEs 
+                    ? 'Arrastra tus imágenes de referencia aquí para comenzar el mapeo espectral.' 
+                    : 'Drag your reference images here to begin spectral mapping.'}
+                </p>
+              </div>
+            ) : null}
+
             <ReferenceDock 
               slots={slots}
               draggingRole={draggingRole}
@@ -98,18 +70,21 @@ export default function StudioPage() {
               fileInputRefs={fileInputRefs}
             />
 
-            <div className="canvas-spacer" />
-
-            <PromptDisplay 
-              isEs={isEs}
-              language={language}
-              result={result}
-              options={options}
-              setOptions={setOptions}
-              handleCopy={handleCopy}
-              copiedKey={copiedKey}
-              setShowMicroscope={setShowMicroscope}
-            />
+            {(slots.base || result) && (
+              <div className="canvas-result-area">
+                <div className="canvas-spacer" />
+                <PromptDisplay 
+                  isEs={isEs}
+                  language={language}
+                  result={result}
+                  options={options}
+                  setOptions={setOptions}
+                  handleCopy={handleCopy}
+                  copiedKey={copiedKey}
+                  setShowMicroscope={setShowMicroscope}
+                />
+              </div>
+            )}
          </div>
       </main>
 
@@ -151,7 +126,7 @@ export default function StudioPage() {
       />
 
       {error && (
-        <div className="studio-toast-error animate-in">
+        <div className="studio-toast-error">
            <span>⚠️ {error}</span>
            <button onClick={() => {}}>×</button>
         </div>

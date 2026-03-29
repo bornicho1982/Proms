@@ -13,8 +13,10 @@ import { DEFAULT_OPTIONS, generateEnginePrompt, generateDetailedPrompt } from '@
 import { saveToHistory, type SavedCharacter } from '@/lib/db/history';
 import { fileToBase64, resizeImage } from '@/lib/utils/image';
 
+import { useLanguage } from '@/context/LanguageContext';
+
 export function useStudio() {
-  const [language, setLanguage] = useState<Language>('es');
+  const { language, setLanguage } = useLanguage();
   const [slots, setSlots] = useState<SlotsState>({ 
     base: null, 
     character: null, 

@@ -1,38 +1,59 @@
-import { UserButton, Show } from '@clerk/nextjs';
+'use client';
+
+import { UserButton, SignedIn } from '@clerk/nextjs';
+import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
+import { usePathname } from 'next/navigation';
+
 export default function StudioLayout({ children }: { children: React.ReactNode }) {
+  const { isEs } = useLanguage();
+  const pathname = usePathname();
+
+  const navItems = [
+    { label: isEs ? 'Estudio' : 'Studio', href: '/studio', icon: '⚡' },
+    { label: isEs ? 'Camerino' : 'Dressing Room', href: '#', icon: '🎭' },
+    { label: isEs ? 'Historial' : 'History', href: '#', icon: '📚' },
+  ];
+
   return (
     <div className="saas-layout">
+      {/* Primary Global Sidebar */}
       <aside className="saas-sidebar">
-        <div className="sidebar-logo">
-          <span className="logo-icon">✧</span>
-          <span className="logo-text">Proms<span style={{ color: "var(--accent-primary)" }}>.</span></span>
+        <div className="sidebar-header">
+          <Link href="/" className="sidebar-logo">
+            <span className="logo-icon">✧</span>
+            <span className="logo-text">Proms<span className="accent-dot">.</span></span>
+          </Link>
         </div>
+
         <nav className="sidebar-nav">
-          <a href="/studio" className="nav-item active">
-            <span className="nav-icon">⚡</span>
-            <span className="nav-label">Studio</span>
-          </a>
-          <a href="#" className="nav-item">
-            <span className="nav-icon">🎭</span>
-            <span className="nav-label">Camerino</span>
-          </a>
-          <a href="#" className="nav-item">
-            <span className="nav-icon">📚</span>
-            <span className="nav-label">Historial</span>
-          </a>
+          {navItems.map((item) => (
+            <Link 
+              key={item.label} 
+              href={item.href} 
+              className={`nav-item ${pathname === item.href ? 'active' : ''}`}
+            >
+              <span className="nav-icon">{item.icon}</span>
+              <span className="nav-label">{item.label}</span>
+            </Link>
+          ))}
         </nav>
 
-        {/* User Profile Hook (Clerk) */}
-        <div style={{ padding: '20px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Show when="signed-in">
-            <UserButton appearance={{ elements: { userButtonAvatarBox: { width: '36px', height: '36px' } } }} />
-          </Show>
-          <div style={{ flex: 1, overflow: 'hidden' }}>
-            <p style={{ margin: 0, fontSize: '0.8rem', fontWeight: 600, color: 'white' }}>Director de Arte</p>
-            <p style={{ margin: 0, fontSize: '0.7rem', color: '#a1a1aa' }}>Plan Free</p>
+        <div className="sidebar-spacer" />
+
+        <div className="sidebar-profile">
+          <div className="profile-top">
+            <SignedIn>
+              <UserButton appearance={{ elements: { userButtonAvatarBox: { width: '32px', height: '32px' } } }} />
+            </SignedIn>
+            <div className="profile-info">
+              <p className="profile-name">Director_01</p>
+              <span className="plan-badge">FREE PLAN</span>
+            </div>
           </div>
         </div>
       </aside>
+
       <main className="saas-main">
         {children}
       </main>
