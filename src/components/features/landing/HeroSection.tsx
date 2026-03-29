@@ -56,17 +56,17 @@ export const HeroSection = ({ isEs = true }: { isEs?: boolean }) => {
         <Show when="signed-out">
           <SignInButton mode="modal">
             <Button variant="primary" className="btn-primary-modern">
-              {isEs ? 'Comenzar Gratis' : 'Start for Free'}
-              <IconArrowRight size={16} style={{ marginLeft: '8px' }} />
+               {isEs ? 'Comenzar Gratis' : 'Start for Free'}
+               <IconArrowRight size={16} style={{ marginLeft: '8px' }} />
             </Button>
           </SignInButton>
         </Show>
-
+ 
         <Show when="signed-in">
           <Link href="/studio">
             <Button variant="primary" className="btn-primary-modern">
-              {isEs ? 'Lanzar Workspace' : 'Launch Workspace'}
-              <IconArrowRight size={16} style={{ marginLeft: '8px' }} />
+               {isEs ? 'Lanzar Workspace' : 'Launch Workspace'}
+               <IconArrowRight size={16} style={{ marginLeft: '8px' }} />
             </Button>
           </Link>
         </Show>

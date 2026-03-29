@@ -14,12 +14,15 @@ export const Card = ({
   padding = 'md',
   ...props
 }: CardProps) => {
-  const baseClass = 'glass-card';
-  const paddingClass = `p-${padding}`; // Custom paddings or handle with inline style
+  const baseClass = 'card-premium';
+  const paddingClass = `p-${padding}`;
   
   return (
     <div className={`${baseClass} card-${variant} ${paddingClass} ${className}`} {...props}>
-      {children}
+      <div className="card-ambient-glow" />
+      <div className="card-content">
+        {children}
+      </div>
     </div>
   );
 };
@@ -27,17 +30,19 @@ export const Card = ({
 export const Badge = ({ 
   children, 
   variant = 'primary',
-  size = 'sm',
   className = '',
   ...props
 }: { 
   children: React.ReactNode; 
-  variant?: 'primary' | 'accent' | 'danger' | 'warning';
-  size?: 'xs' | 'sm' | 'md';
-  className?: string;
-} & React.HTMLAttributes<HTMLSpanElement>) => {
+  variant?: 'primary' | 'secondary' | 'accent' | 'outline' | 'ghost'; 
+  className?: string; 
+  style?: React.CSSProperties;
+}) => {
+  const baseClass = 'badge-premium';
+  const variantClass = `badge-${variant}`;
+  
   return (
-    <span className={`badge-base badge-${variant} size-${size} ${className}`} {...props}>
+    <span className={`${baseClass} ${variantClass} ${className}`} {...props}>
       {children}
     </span>
   );

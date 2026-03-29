@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Show, SignInButton } from '@clerk/nextjs';
+import { SignInButton, Show } from '@clerk/nextjs';
 import { Button } from '@/components/ui/Button';
 
 export const Navbar = ({ isEs = true }: { isEs?: boolean }) => {

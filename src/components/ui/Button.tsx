@@ -16,18 +16,21 @@ export const Button = ({
   className = '', 
   ...props 
 }: ButtonProps) => {
-  const baseClass = 'btn-base';
-  const variantClass = `btn-${variant}-modern`; // Map to existing classes or create new ones
+  const baseClass = 'btn-premium';
+  const variantClass = `variant-${variant}`;
+  const sizeClass = `size-${size}`;
   
   return (
     <button 
-      className={`${baseClass} ${variantClass} ${size} ${className}`} 
+      className={`${baseClass} ${variantClass} ${sizeClass} ${className}`} 
       disabled={isLoading || props.disabled}
       {...props}
     >
-      {isLoading ? (
-        <span className="loading-spinner" style={{ width: '16px', height: '16px' }} />
-      ) : children}
+      <div className="btn-inner">
+        {isLoading ? (
+          <span className="loading-spinner" />
+        ) : children}
+      </div>
     </button>
   );
 };

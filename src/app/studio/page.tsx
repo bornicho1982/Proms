@@ -1,13 +1,12 @@
 'use client';
 
 import { useStudio } from '@/hooks/useStudio';
-import ReferenceDock from '@/components/features/studio/ReferenceDock';
 import DirectorControl from '@/components/features/studio/DirectorControl';
+import ReferenceDock from '@/components/features/studio/ReferenceDock';
 import PromptDisplay from '@/components/features/studio/PromptDisplay';
-import DigitalMicroscope from '@/components/features/studio/DigitalMicroscope';
 import HistoryPanel from '@/components/features/studio/HistoryPanel';
-import BatchPanel from '@/components/features/studio/BatchPanel';
-import { TargetEngine } from '@/types';
+import DigitalMicroscope from '@/components/features/studio/DigitalMicroscope';
+import { ImageRole } from '@/types';
 
 export default function StudioPage() {
   const {
@@ -33,92 +32,103 @@ export default function StudioPage() {
   const isEs = language === 'es';
 
   return (
-    <div className="workbench-container">
-      {/* Background Grid */}
-      <div className="workbench-grid-bg" />
+    <div className="studio-workspace">
+      {/* Background Ambience */}
+      <div className="studio-bg-fx" />
+      
+      {/* Column 1: Workspace ID & Navigation */}
+      <aside className="studio-sidebar-nav">
+         <div className="workspace-brand">
+           Proms <span className="brand-badge">STUDIO</span>
+         </div>
+         
+         <div className="workspace-section">
+            <h3 className="section-label">{isEs ? 'SESIÓN ACTIVA' : 'ACTIVE SESSION'}</h3>
+            <div className="char-badge">
+               <div className="status-indicator online" />
+               {loadedCharName || (isEs ? 'Nuevo ADN' : 'New DNA')}
+            </div>
+         </div>
 
-      {/* Navigation */}
-      <nav className="workbench-nav">
-        <div className="nav-brand">
-          Proms <span className="brand-dot">/</span> <span className="brand-sub">Studio</span>
-        </div>
-        <div className="nav-actions">
-           <div className="lang-switcher">
-             <button className={language === 'es' ? 'active' : ''} onClick={() => setLanguage('es')}>ES</button>
-             <button className={language === 'en' ? 'active' : ''} onClick={() => setLanguage('en')}>EN</button>
-           </div>
-        </div>
-      </nav>
+         <nav className="workspace-menu">
+            {/* Logic for switching views if needed later */}
+         </nav>
 
-      {/* Main Workbench Layout */}
-      <main className="workbench-main">
-        {/* Left Side: Inputs & Reference Dock */}
-        <div className="workbench-sidebar-left">
-           <ReferenceDock 
-             slots={slots}
-             draggingRole={draggingRole}
-             setDraggingRole={setDraggingRole}
-             handleFileSelect={handleFileSelect}
-             handleDrop={handleDrop}
-             removeSlot={(e, role) => removeSlot(role)}
-             fileInputRefs={fileInputRefs}
-           />
+         <div className="sidebar-footer">
+            <button className="lang-pill" onClick={() => setLanguage(isEs ? 'en' : 'es')}>
+               {language.toUpperCase()}
+            </button>
+         </div>
+      </aside>
 
-           <div className="workbench-spacer" />
+      {/* Column 2: Main Creative Canvas (The Manifest) */}
+      <main className="studio-canvas">
+         <div className="canvas-header">
+            <h2 className="canvas-title">
+               {isEs ? 'Manifiesto Visual' : 'Visual Manifest'}
+            </h2>
+            <div className="canvas-actions">
+               {/* Global canvas actions */}
+            </div>
+         </div>
 
-           <HistoryPanel isEs={isEs} />
-        </div>
+         <div className="canvas-content">
+            {/* Reference Modules moved to the main focus area but in a refined dock */}
+            <ReferenceDock 
+              slots={slots}
+              draggingRole={draggingRole}
+              setDraggingRole={setDraggingRole}
+              handleFileSelect={handleFileSelect}
+              handleDrop={handleDrop}
+              removeSlot={(_e: React.MouseEvent, role: ImageRole) => removeSlot(role)}
+              fileInputRefs={fileInputRefs}
+            />
 
-        {/* Center: Controller & Results */}
-        <div className="workbench-center-area">
-           <div className="center-grid">
-              <DirectorControl 
-                isEs={isEs}
-                options={options}
-                setOptions={setOptions}
-                result={result}
-                slots={slots}
-                handleLoadSavedCharacter={handleLoadSavedCharacter}
-                loadedCharName={loadedCharName}
-                isAnalyzing={isAnalyzing}
-                handleAnalyze={handleAnalyze}
-                hasBase={!!slots.base}
-              />
+            <div className="canvas-spacer" />
 
-              <div className="workbench-output-section">
-                <PromptDisplay 
-                  isEs={isEs}
-                  language={language}
-                  result={result}
-                  options={options}
-                  setOptions={setOptions}
-                  handleCopy={handleCopy}
-                  copiedKey={copiedKey}
-                  setShowMicroscope={setShowMicroscope}
-                />
-
-                {/* Batch Panel specifically for the center workflow */}
-                <BatchPanel 
-                  isEs={isEs}
-                  baseSlotFile={slots.base?.file || null}
-                  characterSlotFile={slots.character?.file || null}
-                  language={language}
-                  targetEngine={options.engine as TargetEngine}
-                  onBatchResult={() => {}} // Could be wired to a global notification
-                />
-              </div>
-           </div>
-
-           {error && (
-             <div className="studio-error-banner animate-in">
-                <span>⚠️ {error}</span>
-                <button onClick={() => {}}>×</button>
-             </div>
-           )}
-        </div>
+            <PromptDisplay 
+              isEs={isEs}
+              language={language}
+              result={result}
+              options={options}
+              setOptions={setOptions}
+              handleCopy={handleCopy}
+              copiedKey={copiedKey}
+              setShowMicroscope={setShowMicroscope}
+            />
+         </div>
       </main>
 
-      {/* Right Sidebar: Microscope Overlay */}
+      {/* Column 3: Control Inspector & Intelligence */}
+      <aside className="studio-inspector">
+         <div className="inspector-tabs">
+            <button className="inspector-tab active">{isEs ? 'Controles' : 'Controls'}</button>
+            <button className="inspector-tab" onClick={() => setShowMicroscope(true)}>
+               {isEs ? 'Análisis' : 'Analysis'}
+            </button>
+         </div>
+
+         <div className="inspector-content">
+            <DirectorControl 
+              isEs={isEs}
+              options={options}
+              setOptions={setOptions}
+              result={result}
+              slots={slots}
+              handleLoadSavedCharacter={handleLoadSavedCharacter}
+              loadedCharName={loadedCharName}
+              isAnalyzing={isAnalyzing}
+              handleAnalyze={handleAnalyze}
+              hasBase={!!slots.base}
+            />
+
+            <div className="inspector-spacer" />
+            
+            <HistoryPanel isEs={isEs} />
+         </div>
+      </aside>
+
+      {/* Overlays */}
       <DigitalMicroscope 
         showMicroscope={showMicroscope}
         setShowMicroscope={setShowMicroscope}
@@ -126,15 +136,12 @@ export default function StudioPage() {
         isEs={isEs}
       />
 
-      <footer className="workbench-footer">
-        <div className="footer-status">
-           <span className="status-dot online" />
-           {isEs ? 'Motor de Mapeo Visual: Optimizado' : 'Visual Mapping Engine: Optimized'}
+      {error && (
+        <div className="studio-toast-error animate-in">
+           <span>⚠️ {error}</span>
+           <button onClick={() => {}}>×</button>
         </div>
-        <div className="footer-credits">
-           v0.2.0 <span style={{ color: '#333' }}>|</span> Proms Studio Beta
-        </div>
-      </footer>
+      )}
     </div>
   );
 }
