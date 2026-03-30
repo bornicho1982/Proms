@@ -607,6 +607,49 @@ input, select, textarea { font-family: inherit; outline: none; }
   -webkit-appearance: none;
 }
 
+/* Premium Technical Utilities */
+.bg-glass-dark {
+  background: rgba(15, 15, 26, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.text-technical {
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.border-technical {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.shimmer-technical {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-technical::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  animation: shimmer-tech 3s infinite;
+}
+
+@keyframes shimmer-tech {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

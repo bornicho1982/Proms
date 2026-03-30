@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { UserButton, useUser, SignInButton } from '@clerk/nextjs';
+import ImageDecompositionDemo from '@/components/features/ImageDecompositionDemo';
 
 export default function LandingPage() {
   const { isEs, setLanguage, language } = useLanguage();
@@ -31,7 +32,7 @@ export default function LandingPage() {
           <div className="nav-center">
             <Link href="#features" className="nav-link">{isEs ? 'Características' : 'Features'}</Link>
             <Link href="#gallery" className="nav-link">{isEs ? 'Resultados' : 'Results'}</Link>
-            <Link href="#how-it-works" className="nav-link">{isEs ? 'Tecnología' : 'Technology'}</Link>
+            <Link href="#demo" className="nav-link">{isEs ? 'Tecnología' : 'Technology'}</Link>
             <Link href="#pricing" className="nav-link">{isEs ? 'Precios' : 'Pricing'}</Link>
           </div>
 
@@ -143,6 +144,8 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <ImageDecompositionDemo />
+
       {/* 5. FEATURE BREAKDOWN */}
       <section id="features" className="landing-section technology-section" style={{ background: '#0a0a14' }}>
         <h2 className="section-title" style={{ fontSize: '2.5rem' }}>{isEs ? 'Tecnología de nivel profesional' : 'Professional-grade technology'}</h2>
@@ -175,7 +178,7 @@ export default function LandingPage() {
           <div className="comp-item">
             <span style={{ fontSize: '0.7rem', fontWeight: 900, color: 'var(--text-muted)', marginBottom: '16px', display: 'block', letterSpacing: '0.1em' }}>PROMPT GENERADO</span>
             <div className="card-premium" style={{ fontFamily: 'monospace', fontSize: '0.9rem', color: 'var(--accent-color)', minHeight: '300px' }}>
-              <span style={{ color: 'var(--text-muted)' }}>// FLUX.1 Optimized</span><br/><br/>
+              <span style={{ color: 'var(--text-muted)' }}>{"// FLUX.1 Optimized"}</span><br/><br/>
               Cinematic close-up portrait of a woman with natural freckles, soft window lighting from the left, shallow depth of field (f/1.8), organic textures, hyper-realistic, 8k render, neutral color temperature, shot on 85mm lens...
             </div>
           </div>
