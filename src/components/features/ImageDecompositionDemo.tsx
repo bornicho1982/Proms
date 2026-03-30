@@ -41,12 +41,13 @@ export default function ImageDecompositionDemo() {
   const [isVisible, setIsVisible] = useState(false);
   const [typewrittenTexts, setTypewrittenTexts] = useState<string[]>(Array(ANALYSIS_CARDS.length).fill(''));
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
-  // Parallax logic
+  // Parallax logic - Subtle ±8deg max
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !isHovering) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -111,7 +112,12 @@ export default function ImageDecompositionDemo() {
       id="demo"
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative overflow-hidden py-32 px-6 bg-[#05050a]"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => {
+        setIsHovering(false);
+        setMousePos({ x: 0, y: 0 });
+      }}
+      className="relative isolate z-0 overflow-hidden py-32 px-6 bg-[#05050a]"
     >
       {/* Background Decorative Grids */}
       <div className="absolute inset-0 opacity-10 pointer-events-none" 
@@ -131,8 +137,8 @@ export default function ImageDecompositionDemo() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column: Premium 3D Stack */}
-          <div className="relative flex justify-center py-20 lg:py-0">
+          {/* Left Column: Premium 3D Stack - Bug 2 Fix: overflow-hidden & contain: layout */}
+          <div className="relative flex justify-center py-20 lg:py-0 overflow-hidden" style={{ contain: 'layout' }}>
             <div className="relative w-full max-w-[440px] aspect-[4/5] perspective-container">
               {/* Layers Stack */}
               {[
@@ -144,16 +150,18 @@ export default function ImageDecompositionDemo() {
                 { id: 'dna', tilt: 3.5, color: '#7c3aed' }
               ].map((layer, i) => {
                 const active = stage > i;
-                const offset = active ? i * 70 : 0;
-                const rotateX = 20 + mousePos.y * 15;
-                const rotateY = mousePos.x * 15;
+                const offset = active ? i * 55 : 0; // Bug 2 Fix: Reduced offset
+                
+                // Bug 1 Fix: Rotation only on hover, max ±8deg
+                const rotateX = isHovering ? mousePos.y * 16 : 0;
+                const rotateY = isHovering ? mousePos.x * 16 : 0;
                 
                 return (
                   <div
                     key={layer.id}
                     className="absolute inset-0 transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]"
                     style={{
-                      transform: `translate3d(0, -${offset}px, ${i * 40}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+                      transform: `translate3d(0, -${offset}px, ${i * 15}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`, // Bug 2 Fix: Reduced Z-depth
                       opacity: active || i === 0 ? 1 : 0,
                       zIndex: i
                     }}
@@ -253,40 +261,6 @@ export default function ImageDecompositionDemo() {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .perspective-container {
-          perspective: 2000px;
-          transform-style: preserve-3d;
-        }
-
-        @keyframes slide-up {
-          from { opacity: 0; transform: translateY(30px) scale(0.95); }
-          to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .slide-up {
-          animation: slide-up 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
-
-        @keyframes flicker {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-
-        .animate-flicker {
-          animation: flicker 0.8s infinite;
-        }
-
-        @keyframes progress-fast {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-
-        .animate-progress-fast {
-          animation: progress-fast 1.5s linear infinite;
-        }
-      `}</style>
     </section>
   );
 }
