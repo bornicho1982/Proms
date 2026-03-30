@@ -736,3 +736,19 @@ input, select, textarea { font-family: inherit; outline: none; }
 .animate-progress-fast {
   animation: progress-fast 1.5s linear infinite;
 }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes layerReveal {
+  0%   { box-shadow: 0 0 0px rgba(255,255,255,0); }
+  30%  { box-shadow: 0 0 30px var(--layer-glow); }
+  100% { box-shadow: 0 0 10px var(--layer-glow-dim); }
+}
